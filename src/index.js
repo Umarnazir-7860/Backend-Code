@@ -1,21 +1,21 @@
-import dotenv from "dotenv"
-import connectDB from "./db/index.js";  // Ensure you are importing a file, not a directory
-import express from "express";
- const app=express( )
-dotenv.config(  {
-    path:'./env'
-})
+import dotenv from "dotenv";
+import connectDB from "./db/index.js";
+import app from "./app.js"; // Make sure this file exists and exports "app"
+
+dotenv.config({
+    path: './env'
+});
+
 connectDB()
-.then(()=>{
-    app.listen(process.env.PORT || 8000,()=>{
-        console.log(`Server is running on : ${process.env.PORT}`);
-        
+    .then(() => {
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server is running on: ${process.env.PORT || 8000}`);
+        });
     })
-})
-.catch((err)=>{
-    console.log("MongoDB connection Faled!!!",err);
-    
-})
+    .catch((err) => {
+        console.log("MongoDB connection Failed!!!", err);
+    });
+
 // (async ()=>{
 // try {
 //     await mongoose.connect(`${process.env.MONGODB_URL}/${DB_NAME}`)

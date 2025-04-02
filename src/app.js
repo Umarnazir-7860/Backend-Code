@@ -1,3 +1,5 @@
+console.log("✅ Global Debugging Test");
+
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -17,10 +19,10 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // Routes import
-import userRoutes from "./routes/user.routes.js";
+import userRoutes from './routes/user.routes.js';
+app.use('/api/v1/users', userRoutes);
 
-// Route declaration
-app.use("/api/v1/users", userRoutes);  
+
 
 // 🔹 Debugging ke liye yeh code add kiya hai
 app._router.stack.forEach((r) => {
@@ -28,6 +30,8 @@ app._router.stack.forEach((r) => {
         console.log(`✅ Registered route: ${r.route.path}`);
     }
 });
+console.log("✅ Server Initialized");
+
 
 
 export default app;
