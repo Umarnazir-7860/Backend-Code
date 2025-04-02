@@ -1,49 +1,31 @@
-import {v2 as cloudinary } from 'cloudinary';
-import { log } from 'console';
+import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
 
+// Cloudinary configuration at the top of the file
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY,    
+    api_secret: process.env.CLOUDINARY_API_SECRET 
+});
 
-(async function() {
+const uploadOnCloudinary = async (filePath) => {
+    try {
+        if (!filePath) return null;
 
-    // Configuration
-    cloudinary.config({ 
-        cloud_name: process.env.CLOUDINARY_NAME, 
-        api_key: process.env.CLOUDINARY_API_KEY,    
-        api_secret:process.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
-    })});
- 
-    const uploadOnCloudinary = async (filePath) => {
-        try {
-            if (!filePath) return null;
-    
-            // Upload the file on Cloudinary
-            const response = await cloudinary.uploader.upload(filePath, {
-                resource_type: "auto",
-            });
-    
-            // File has been uploaded successfully
-            console.log("File uploaded successfully", response.url);
-    
-            return response;
-        } catch (error) {
-         fs.unlinkSync(filePath);//remove the locally saved temporary file as the upload failed
-         return null;
-            
-        }
-    };
+        // Upload the file on Cloudinary
+        const response = await cloudinary.uploader.upload(filePath, {
+            resource_type: "auto", // auto will let Cloudinary determine the file type (image/video/etc)
+        });
 
-    export default uploadOnCloudinary;
+        // File has been uploaded successfully
+        console.log("File uploaded successfully", response.url);
+        return response;
+    } catch (error) {
+        // If upload fails, remove the temporary file from the local system
+        fs.unlinkSync(filePath);
+        console.error("Error uploading file:", error);
+        return null;
+    }
+};
 
-
-    //  // Upload an image
-    //  const uploadResult = await cloudinary.uploader
-    //    .upload(
-    //        'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
-    //            public_id: 'shoes',
-    //        }
-    //    )
-    //    .catch((error) => {
-    //        console.log(error);
-    //    });
-    
-    // console.log(uploadResult);
+export default uploadOnCloudinary;
