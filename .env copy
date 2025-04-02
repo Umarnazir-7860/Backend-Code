@@ -1,0 +1,7 @@
+PORT=8000   
+CORS_ORIGIN=http://localhost:3000
+
+MONGODB_URL=mongodb+srv://umarnazir7158:umarz7158@cluster0.ixtjr.mongodb.net/
+CLOUDINARY_NAME=dwrlocmqp
+CLOUDINARY_API_KEY=416125519545845
+CLOUDINARY_API_SECRET=VLWsePR2yzmpzGD4juGgCMPP6lQ
