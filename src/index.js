@@ -15,7 +15,7 @@ connectDB()
     .catch((err) => {
         console.log("MongoDB connection Failed!!!", err);
     });
-
+    
 // (async ()=>{
 // try {
 //     await mongoose.connect(`${process.env.MONGODB_URL}/${DB_NAME}`)
